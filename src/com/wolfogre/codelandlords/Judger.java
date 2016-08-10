@@ -39,7 +39,7 @@ public class Judger {
             String prePreOutCards = outCardsQueue.size() >= 2 ? outCardsQueue.get(outCardsQueue.size() - 2) : "";
             String preOutCards = outCardsQueue.size() >= 1 ? outCardsQueue.get(outCardsQueue.size() - 1) : "";
             String outCards = gambler[turn].play(prePreOutCards, preOutCards, cards[turn]);
-            if(!cardsChecker.check(prePreOutCards, preOutCards, cards[turn], outCards)){
+            if(!cardsChecker.check(preOutCards, cards[turn], outCards)){
                 int[] result = new int[3];
                 result[turn] = -10;
                 return result;

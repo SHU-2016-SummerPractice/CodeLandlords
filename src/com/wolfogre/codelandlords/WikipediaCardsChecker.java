@@ -5,7 +5,7 @@ package com.wolfogre.codelandlords;
  */
 public class WikipediaCardsChecker implements CardsChecker {
     @Override
-    public boolean check(String prePreOutCards, String preOutCards, String ownedCards, String outCards) {
+    public boolean check(String preOutCards, String ownedCards, String outCards) {
         return false;
     }
 }
