@@ -1,7 +1,11 @@
 package com.wolfogre.codelandlords;
 
+import com.wolfogre.codelandlords.Gambler.Role;
+
 import java.util.ArrayList;
 import java.util.Random;
+
+import static com.wolfogre.codelandlords.Gambler.Role.*;
 
 /**
  * Created by wolfogre on 8/9/16.
@@ -21,13 +25,14 @@ public class Judger {
         this.cardsChecker = cardsChecker;
     }
 
-    public int[] judge() throws FoulException {
+    public int[] judge() {
         ArrayList<String> outCardsQueue = new ArrayList<>();
         int landlord = getRandomLandlord();
         String[] cards = getRandomCards(landlord);
         int turn = landlord;
+        int bet = 3;
         for(int i = 0; i < 3; ++i){
-            gambler[i].start(getRole(i, landlord), cards[3], cards[i]);
+            gambler[i].start(getRoleByIndex(i, landlord), cards[3], cards[i]);
         }
 
         while(!(cards[0].isEmpty() || cards[1].isEmpty() || cards[2].isEmpty())){
@@ -35,12 +40,11 @@ public class Judger {
             String preOutCards = outCardsQueue.size() >= 1 ? outCardsQueue.get(outCardsQueue.size() - 1) : "";
             String outCards = gambler[turn].play(prePreOutCards, preOutCards, cards[turn]);
             if(!cardsChecker.check(prePreOutCards, preOutCards, cards[turn], outCards)){
-                throw new FoulException(gambler[0].getName() + " faul",
-                        prePreOutCards,
-                        preOutCards,
-                        cards[turn],
-                        outCards);
+                int[] result = new int[3];
+                result[turn] = -10;
+                return result;
             }
+            //TODO:赌注加倍
             cards[turn] = subtractCards(cards[turn], outCards);
             outCardsQueue.add(outCards);
             turn = (turn + 1) % 3;
@@ -54,13 +58,19 @@ public class Judger {
             }
         }
         for(int i = 0; i < 3; ++i){
-            //gambler[i].over(getRole(i, winner), cards[3], cards[i]);
-            //TODO
+            gambler[i].over(getRoleByIndex(i, winner),
+                    cards[getIndexByRole(i, PRE_PRE)],
+                    cards[getIndexByRole(i, PRE)], cards[i]);
         }
 
-
-
-        return new int[3];
+        if(winner == landlord){
+            int[] result = {-bet, -bet, -bet};
+            result[winner] = 2 * bet;
+            return result;
+        }
+        int[] result = {bet, bet, bet};
+        result[winner] = -2 * bet;
+        return result;
     }
 
     private String[] getRandomCards(int landlord){
@@ -71,16 +81,29 @@ public class Judger {
         return random.nextInt(3);
     }
 
-    private Gambler.Role getRole(int self, int other){
+    private Role getRoleByIndex(int self, int other){
         switch ((other + 3 - self) % 3){
             case 0:
-                return Gambler.Role.SELF;
+                return SELF;
             case 1:
-                return Gambler.Role.PRE_PRE;
+                return PRE_PRE;
             case 2:
-                return Gambler.Role.PRE;
+                return PRE;
         }
         return null;
+    }
+
+    private int getIndexByRole(int self, Role other){
+        switch (other){
+            case PRE_PRE:
+                return (self - 2 + 3) % 3;
+            case PRE:
+                return (self - 1 + 3) % 3;
+            case SELF:
+                return self;
+            default:
+                return -1;
+        }
     }
 
     private String subtractCards(String ownedCards, String outCards){
