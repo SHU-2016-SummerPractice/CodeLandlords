@@ -39,7 +39,6 @@ public class WikipediaCardsChecker implements CardsChecker {
         for(char ch : cards.toCharArray())
             if(FormatCards.getIndexByCard(ch) == -1)
                 return CardsType.错误;
-        //TODO:单顺判断错误
         FormatCards formatCards = new FormatCards(cards);
         switch (cards.length()){
             case 1:
@@ -67,49 +66,53 @@ public class WikipediaCardsChecker implements CardsChecker {
                         && FormatCards.getIndexByCard(formatCards.getCards()[cards.length() - 1]) <= FormatCards.getIndexByCard('A'))
                     return CardsType.单顺;
                 return CardsType.错误;
-            case 6:
+            case 6: //TODO
                 if(cards.charAt(0) == cards.charAt(1) && cards.charAt(1) == cards.charAt(2) && cards.charAt(2) == cards.charAt(3)
                         || cards.charAt(1) == cards.charAt(2) && cards.charAt(2) == cards.charAt(3) && cards.charAt(3) == cards.charAt(4)
                         || cards.charAt(2) == cards.charAt(3) && cards.charAt(3) == cards.charAt(4) && cards.charAt(4) == cards.charAt(5))
                     return CardsType.四带二;
-            case 7:
                 if(formatCards.isContinuous(0, formatCards.size())
                         && FormatCards.getIndexByCard(formatCards.getCards()[cards.length() - 1]) <= FormatCards.getIndexByCard('A'))
                     return CardsType.单顺;
                 return CardsType.错误;
-            case 8:
+            case 7: //TODO
                 if(formatCards.isContinuous(0, formatCards.size())
                         && FormatCards.getIndexByCard(formatCards.getCards()[cards.length() - 1]) <= FormatCards.getIndexByCard('A'))
                     return CardsType.单顺;
                 return CardsType.错误;
-            case 9:
+            case 8: //TODO
                 if(formatCards.isContinuous(0, formatCards.size())
                         && FormatCards.getIndexByCard(formatCards.getCards()[cards.length() - 1]) <= FormatCards.getIndexByCard('A'))
                     return CardsType.单顺;
                 return CardsType.错误;
-            case 10:
+            case 9: //TODO
                 if(formatCards.isContinuous(0, formatCards.size())
                         && FormatCards.getIndexByCard(formatCards.getCards()[cards.length() - 1]) <= FormatCards.getIndexByCard('A'))
                     return CardsType.单顺;
                 return CardsType.错误;
-            case 11:
+            case 10: //TODO
                 if(formatCards.isContinuous(0, formatCards.size())
                         && FormatCards.getIndexByCard(formatCards.getCards()[cards.length() - 1]) <= FormatCards.getIndexByCard('A'))
                     return CardsType.单顺;
                 return CardsType.错误;
-            case 12:
+            case 11: //TODO
                 if(formatCards.isContinuous(0, formatCards.size())
                         && FormatCards.getIndexByCard(formatCards.getCards()[cards.length() - 1]) <= FormatCards.getIndexByCard('A'))
                     return CardsType.单顺;
                 return CardsType.错误;
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-            case 17:
-            case 18:
-            case 19:
-            case 20:
+            case 12: //TODO
+                if(formatCards.isContinuous(0, formatCards.size())
+                        && FormatCards.getIndexByCard(formatCards.getCards()[cards.length() - 1]) <= FormatCards.getIndexByCard('A'))
+                    return CardsType.单顺;
+                return CardsType.错误;
+            case 13: //TODO
+            case 14: //TODO
+            case 15: //TODO
+            case 16: //TODO
+            case 17: //TODO
+            case 18: //TODO
+            case 19: //TODO
+            case 20: //TODO
             default:
                 return null;
         }

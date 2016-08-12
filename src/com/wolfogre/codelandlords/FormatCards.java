@@ -1,5 +1,6 @@
 package com.wolfogre.codelandlords;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,11 +28,11 @@ public class FormatCards{
                 if(!(counts[j] > counts[j + 1]
                         || counts[j] == counts[j + 1] && getIndexByCard(cards[j]) < getIndexByCard(cards[j + 1]))){
                     int temp1 = counts[j];
-                    counts[j] = counts[i];
-                    counts[i] = temp1;
+                    counts[j] = counts[j + 1];
+                    counts[j + 1] = temp1;
                     char temp2 = cards[j];
-                    cards[j] = cards[i];
-                    cards[i] = temp2;
+                    cards[j] = cards[j + 1];
+                    cards[j + 1] = temp2;
                 }
             }
         }
