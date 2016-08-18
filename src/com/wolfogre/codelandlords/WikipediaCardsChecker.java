@@ -1,5 +1,7 @@
 package com.wolfogre.codelandlords;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,11 +60,15 @@ public class WikipediaCardsChecker implements CardsChecker {
             case 2:
                 if(cards.length() == 2)
                     return CardsType.一对;
-                if(cards.length() >= 3
-                        && formatCards.getCounts()[0] == 2
-                        && formatCards.getCounts()[formatCards.size() - 1] == 2
-                        && formatCards.getCards()[formatCards.size() - 1] <= 'A')
+                if(cards.length() == 3)
+                    return CardsType.错误;
+                if(cards.length() > 3
+                        && judgeStraightPair(formatCards, 0))
+//                        && formatCards.getCounts()[0] == 2
+//                        && formatCards.getCounts()[formatCards.size() - 1] == 2
+//                        && formatCards.getCards()[formatCards.size() - 1] <= 'A')
                     return CardsType.双顺;
+                return CardsType.错误;
             case 3:
                 if(cards.length() == 3)
                     return CardsType.三不带;
@@ -114,7 +120,62 @@ public class WikipediaCardsChecker implements CardsChecker {
         return sb.toString();
     }
 
+    /**
+     * 判断是不是连续的顺子对，传入0是从头开始判断，判断规则：最小为3，最大为A
+     * @param formatCards 牌对象
+     * @param index 当前是第几类排，如223355中，2是0，3是1，5是2
+     * @return
+     */
+    private Boolean judgeStraightPair(FormatCards formatCards, int index){
+        if(index == formatCards.size()){
+            return true;
+        }
+        if(formatCards.getCounts()[index] == 2){
+            if(index + 1 < formatCards.size()
+                    && (FormatCards.getIndexByCard(formatCards.getCards()[index]) != FormatCards.getIndexByCard(formatCards.getCards()[index+1]) - 1
+                    || formatCards.getCards()[index+1] == 'A') ){
+                return false;
+            }
+            return judgeStraightPair(formatCards, index+1);
+        }
+        return false;
+    }
 
+    @Test
+    public void testJSP(){
+        String cards = "2233";
+        FormatCards formatCards = new FormatCards(cards);
+        System.out.println(judgeStraightPair(formatCards, 0));
+    }
+
+    /**
+     * 判断是否成顺子的通用方法，在num为3的时候请注意，这里只能判断3是否成顺，如果带了对子，请判断对子的数量和仨子的数量是否相等
+     * @param formatCards 牌对象
+     * @param index 从第几类数字开始判断
+     * @param num 单顺1，双顺2，三顺3
+     * @return
+     */
+    private Boolean judgeStraight(FormatCards formatCards, int index, int num){
+        if(index == formatCards.size()){
+            return true;
+        }
+        if(formatCards.getCounts()[index] == num){
+            if(index + 1 < formatCards.size()
+                    && (FormatCards.getIndexByCard(formatCards.getCards()[index]) != FormatCards.getIndexByCard(formatCards.getCards()[index+1]) - 1
+                    || formatCards.getCards()[index+1] == 'A') ){
+                return false;
+            }
+            return judgeStraight(formatCards, index+1, num);
+        }
+        return false;
+    }
+
+    @Test
+    public void testJS(){
+        String cards = "333444555";
+        FormatCards formatCards = new FormatCards(cards);
+        System.out.println(judgeStraight(formatCards, 0, 3));
+    }
 }
 
 
