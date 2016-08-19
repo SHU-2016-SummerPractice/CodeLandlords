@@ -2,10 +2,6 @@ package com.wolfogre.codelandlords;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by wolfogre on 8/10/16.
  */
