@@ -13,3 +13,5 @@
 ###8.20:
 * qjkobe
 完成了牌型检测的编写
+* wolfogre
+重写了判读双顺的逻辑，judgeStraightPair 虽然很优美，但是没有充分利用已有的函数`formatCards.isContinuous()`
