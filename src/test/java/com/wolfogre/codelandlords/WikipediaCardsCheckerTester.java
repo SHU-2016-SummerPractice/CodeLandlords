@@ -17,6 +17,7 @@ public class WikipediaCardsCheckerTester {
         testData.add(new AbstractMap.SimpleEntry<>("A", WikipediaCardsChecker.CardsType.单张));
         testData.add(new AbstractMap.SimpleEntry<>("AA", WikipediaCardsChecker.CardsType.一对));
         testData.add(new AbstractMap.SimpleEntry<>("AAAA", WikipediaCardsChecker.CardsType.炸弹));
+        testData.add(new AbstractMap.SimpleEntry<>("SM", WikipediaCardsChecker.CardsType.火箭));
         testData.add(new AbstractMap.SimpleEntry<>("33445566", WikipediaCardsChecker.CardsType.双顺));
         testData.add(new AbstractMap.SimpleEntry<>("3344556678", WikipediaCardsChecker.CardsType.错误));
         testData.add(new AbstractMap.SimpleEntry<>("3344", WikipediaCardsChecker.CardsType.错误));
@@ -24,12 +25,16 @@ public class WikipediaCardsCheckerTester {
         testData.add(new AbstractMap.SimpleEntry<>("KKKA", WikipediaCardsChecker.CardsType.三带一));
         testData.add(new AbstractMap.SimpleEntry<>("3KKKA", WikipediaCardsChecker.CardsType.错误));
         testData.add(new AbstractMap.SimpleEntry<>("33KKK", WikipediaCardsChecker.CardsType.三带二));
-        testData.add(new AbstractMap.SimpleEntry<>("33344457", WikipediaCardsChecker.CardsType.飞机));
-        testData.add(new AbstractMap.SimpleEntry<>("3334445577", WikipediaCardsChecker.CardsType.飞机带翼));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555666789M", WikipediaCardsChecker.CardsType.飞机带翼));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555666778800QQ", WikipediaCardsChecker.CardsType.飞机带翼));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555666780Q", WikipediaCardsChecker.CardsType.飞机带翼));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666", WikipediaCardsChecker.CardsType.飞机不带翼));
+        testData.add(new AbstractMap.SimpleEntry<>("33344457", WikipediaCardsChecker.CardsType.飞机带小翼));
+        testData.add(new AbstractMap.SimpleEntry<>("3334445577", WikipediaCardsChecker.CardsType.飞机带大翼));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666789M", WikipediaCardsChecker.CardsType.飞机带小翼));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666778800QQ", WikipediaCardsChecker.CardsType.飞机带大翼));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666780Q", WikipediaCardsChecker.CardsType.飞机带小翼));
         testData.add(new AbstractMap.SimpleEntry<>("333444555666778800", WikipediaCardsChecker.CardsType.错误));
+        testData.add(new AbstractMap.SimpleEntry<>("33334455", WikipediaCardsChecker.CardsType.四带二对));
+        testData.add(new AbstractMap.SimpleEntry<>("333345", WikipediaCardsChecker.CardsType.四带二张));
+        testData.add(new AbstractMap.SimpleEntry<>("3333455", WikipediaCardsChecker.CardsType.错误));
 
         WikipediaCardsChecker cardsChecker = new WikipediaCardsChecker();
         for(Map.Entry<String, WikipediaCardsChecker.CardsType> entry : testData)

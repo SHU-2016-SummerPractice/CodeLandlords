@@ -25,7 +25,8 @@ public class WikipediaCardsChecker implements CardsChecker {
         三带二,
         单顺,
         双顺,
-        四带二,
+        四带二张,
+        四带二对,
         飞机不带翼,
         飞机带小翼,
         飞机带大翼,
@@ -79,29 +80,33 @@ public class WikipediaCardsChecker implements CardsChecker {
                     if(formatCards.getCounts()[1] == 2)
                         return CardsType.三带二;
                 }
-                if(cards.length() > 5
-                        && judgeStraight(formatCards, 0, 3)){
-                    return CardsType.飞机不带翼;
-                }
-                if(cards.length() > 7
-                        && judgePlaneWithWing(formatCards, 0, 3, getPlaneSize(formatCards, 3))){
-                    return CardsType.飞机带大翼;
+                if(formatCards.size() >= 2){
+                    if(formatCards.getCounts()[formatCards.size() - 1] == 3
+                            && formatCards.isContinuous(0, formatCards.size())
+                            && FormatCards.getIndexByCard(formatCards.getCards()[formatCards.size() - 1]) <= FormatCards.getIndexByCard('A')){
+                        return CardsType.飞机不带翼;
+                    }
+                    if(formatCards.size() % 2 == 0){
+                        if(formatCards.getCounts()[formatCards.size() / 2 - 1] == 3){
+                            if(formatCards.getCounts()[formatCards.size() / 2] == 1 && formatCards.getCounts()[formatCards.size() - 1] == 1)
+                                return CardsType.飞机带小翼;
+                            if(formatCards.getCounts()[formatCards.size() / 2] == 2 && formatCards.getCounts()[formatCards.size() - 1] == 2)
+                                return CardsType.飞机带大翼;
+                        }
+                    }
                 }
                 return CardsType.错误;
             case 4:
                 if(formatCards.size() == 1){
                     return CardsType.炸弹;
                 }
-                if(formatCards.size() == 3
-                        && formatCards.getCounts()[1] == formatCards.getCounts()[2]
-                        && formatCards.getCounts()[1] <= 2){
-                    //TODO:比如44448888，算是4带二，但是是四个8带两个4，而不是四个4带两个8
-                    return CardsType.四带二;
+                if(formatCards.size() == 3){
+                    if(formatCards.getCounts()[1] == 1 && formatCards.getCounts()[2] == 1)
+                        return CardsType.四带二张;
+                    if(formatCards.getCounts()[1] == 2 && formatCards.getCounts()[2] == 2)
+                        return CardsType.四带二对;
                 }
-                if(cards.length() == 5
-                        || cards.length() == 7){
-                    return CardsType.错误;
-                }
+                // 44448888 这种情况不算四带二了吧，四带二的目的是牺牲炸来跑单只张或跑小对，但这个可是两个炸哇
                 return CardsType.错误;
             default:
                 return null;
@@ -126,95 +131,6 @@ public class WikipediaCardsChecker implements CardsChecker {
         }
         return true;
     }
-
-    private String sortCards(String origin){
-        int[] record = new int[15];
-        for(char ch : origin.toCharArray()){
-            ++record[FormatCards.getIndexByCard(ch)];
-        }
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < 15; ++i){
-            while(record[i]-- > 0)
-                sb.append(FormatCards.getCardByIndex(i));
-        }
-        return sb.toString();
-    }
-
-    /**
-     * 判断是否成顺子的通用方法，在num为3的时候请注意，这里只能判断3是否成顺，如果带了对子，请判断对子的数量和仨子的数量是否相等
-     * @param formatCards 牌对象
-     * @param index 从第几类数字开始判断
-     * @param num 单顺1，双顺2，三顺3
-     * @return
-     */
-    private Boolean judgeStraight(FormatCards formatCards, int index, int num){
-        if(index == formatCards.size()){
-            return true;
-        }
-        if(formatCards.getCounts()[index] == num){
-            if(index + 1 < formatCards.size()
-                    && (FormatCards.getIndexByCard(formatCards.getCards()[index]) != FormatCards.getIndexByCard(formatCards.getCards()[index+1]) - 1
-                    || formatCards.getCards()[index+1] == 'A') ){
-                return false;
-            }
-            return judgeStraight(formatCards, index+1, num);
-        }
-        return false;
-    }
-
-    /**
-     * 判断是否成飞机带翅膀
-     * @param formatCards 牌对象
-     * @param index 从第几类数字开始判断
-     * @param num 三顺3，航天飞机4
-     * @param planeSize 飞机数量。333444555，飞机数量3
-     * @return
-     */
-    private Boolean judgePlaneWithWing(FormatCards formatCards, int index, int num, int planeSize){
-        if(index == planeSize){
-            //判断后面是对子或者别的
-            if(formatCards.size() == (planeSize << 1)){
-                for(int i = formatCards.size()-1; i > planeSize; i--){
-                    if(formatCards.getCounts()[i] != formatCards.getCounts()[i-1]){
-                        return false;
-                    }
-                }
-                return true;
-            }else{
-                return false;
-            }
-        }
-        if(formatCards.getCounts()[index] == num){
-            if(index + 1 < planeSize
-                    && (FormatCards.getIndexByCard(formatCards.getCards()[index]) != FormatCards.getIndexByCard(formatCards.getCards()[index+1]) - 1
-                    || formatCards.getCards()[index+1] == 'A') ){
-                return false;
-            }
-            return judgePlaneWithWing(formatCards, index+1, num, planeSize);
-        }
-        return false;
-    }
-
-    @Test
-    public void TestJPWW(){
-        String cards = "3333444478";
-        FormatCards formatCards = new FormatCards(cards);
-        System.out.println(judgePlaneWithWing(formatCards, 0, 4, 2));
-    }
-
-    /**获取同一长度牌的的数量。比如333444，返回2。注意这里不会报错，请先判断是否连续
-     * @param formatCards 牌对象
-     * @param num 三顺3
-     * @return
-     */
-    private int getPlaneSize(FormatCards formatCards, int num){
-        int i = 0, count = 0;
-        while(formatCards.getCounts()[i++] == num){
-            count ++;
-        }
-        return count;
-    }
-
 }
 
 
