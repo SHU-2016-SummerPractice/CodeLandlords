@@ -2,17 +2,11 @@ package com.wolfogre.codelandlords;
 
 import org.junit.Test;
 
-/**
- * Created by wolfogre on 8/10/16.
- */
 public class WikipediaCardsChecker implements CardsChecker {
     @Override
     public boolean check(String preOutCards, String ownedCards, String outCards) {
         if(!contains(ownedCards, outCards))
             return false;
-        ownedCards = sortCards(ownedCards);
-        outCards = sortCards(outCards);
-        //TODO
         return false;
     }
 
@@ -62,9 +56,6 @@ public class WikipediaCardsChecker implements CardsChecker {
                     return CardsType.错误;
                 if(cards.length() > 3
                         && judgeStraightPair(formatCards, 0))
-//                        && formatCards.getCounts()[0] == 2
-//                        && formatCards.getCounts()[formatCards.size() - 1] == 2
-//                        && formatCards.getCards()[formatCards.size() - 1] <= 'A')
                     return CardsType.双顺;
                 return CardsType.错误;
             case 3:
@@ -85,17 +76,6 @@ public class WikipediaCardsChecker implements CardsChecker {
                         && judgePlaneWithWing(formatCards, 0, 3, getPlaneSize(formatCards, 3))){
                     return CardsType.飞机带翼;
                 }
-//                int endOfThree;
-//                endOfThree = 0;
-//                while (formatCards.getCounts()[endOfThree] != 3 && endOfThree < formatCards.size()) {
-//                    ++endOfThree;
-//                }
-//                //注意 333 444 555 QQQ
-//                if(formatCards.isContinuous(0, endOfThree)){
-//                    if(formatCards.size() == endOfThree)
-//                        return CardsType.飞机;
-//                    //碰到问题了，333 444 555 666 JJJJ算不算？
-//                }
             case 4:
                 if(formatCards.size() == 1){
                     return CardsType.炸弹;
@@ -114,23 +94,6 @@ public class WikipediaCardsChecker implements CardsChecker {
                 }
                 if(cards.length() == 5
                         || cards.length() == 7){
-                    return CardsType.错误;
-                }
-                return CardsType.错误;
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                if(formatCards.size() == 1){
-                   return CardsType.炸弹;
-                }
-                if(formatCards.size() == 3
-                        && formatCards.getCounts()[1] == formatCards.getCounts()[2]
-                        && formatCards.getCounts()[1] <= 2){
-                    return CardsType.四带二;
-                }
-                if(formatCards.size() >= 4){
-                    //TODO:类似与5555566666带翅膀的，我就不考虑了。
                     return CardsType.错误;
                 }
                 return CardsType.错误;

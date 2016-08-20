@@ -8,12 +8,6 @@ import java.util.Scanner;
 public class Manager {
 
     public static void main(String[] args){
-        System.out.println("Begin!");
-        WikipediaCardsChecker cardsChecker = new WikipediaCardsChecker();
-        String input;
-        Scanner scanner = new Scanner(System.in);
-        while(scanner.hasNext()){
-            System.out.println(cardsChecker.getCardsType(scanner.nextLine()));
-        }
+
     }
 }
