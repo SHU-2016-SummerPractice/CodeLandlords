@@ -26,10 +26,9 @@ public class WikipediaCardsChecker implements CardsChecker {
         单顺,
         双顺,
         四带二,
-        飞机,
-        飞机带翼,
-        航天飞机,
-        航天飞机带翼,
+        飞机不带翼,
+        飞机带小翼,
+        飞机带大翼,
         炸弹,
         火箭,
     }
@@ -82,22 +81,16 @@ public class WikipediaCardsChecker implements CardsChecker {
                 }
                 if(cards.length() > 5
                         && judgeStraight(formatCards, 0, 3)){
-                    return CardsType.飞机;
+                    return CardsType.飞机不带翼;
                 }
                 if(cards.length() > 7
                         && judgePlaneWithWing(formatCards, 0, 3, getPlaneSize(formatCards, 3))){
-                    return CardsType.飞机带翼;
+                    return CardsType.飞机带大翼;
                 }
                 return CardsType.错误;
             case 4:
                 if(formatCards.size() == 1){
                     return CardsType.炸弹;
-                }
-                if(judgeStraight(formatCards, 0, 4)){
-                    return CardsType.航天飞机;
-                }
-                if(judgePlaneWithWing(formatCards, 0, 4, getPlaneSize(formatCards, 4))){
-                    return CardsType.航天飞机带翼;
                 }
                 if(formatCards.size() == 3
                         && formatCards.getCounts()[1] == formatCards.getCounts()[2]
