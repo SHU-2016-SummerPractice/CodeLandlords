@@ -50,6 +50,7 @@ public class WikipediaCardsCheckerTester {
 
     @Test
     public void testCheck() {
+
         class TestData{
             public TestData(String preOutCards, String ownedCards, String outCards, boolean result) {
                 this.preOutCards = preOutCards;
@@ -57,7 +58,6 @@ public class WikipediaCardsCheckerTester {
                 this.outCards = outCards;
                 this.result = result;
             }
-
             String preOutCards;
             String ownedCards;
             String outCards;
@@ -69,14 +69,16 @@ public class WikipediaCardsCheckerTester {
         testData.add(new TestData("A", "A2", "2", true));
         testData.add(new TestData("A", "A", "2", false));
         testData.add(new TestData("A", "A2", "A", false));
+        testData.add(new TestData("SM", "2222", "2222", false));
+        testData.add(new TestData("2222", "AAAASM", "SM", true));
 
         WikipediaCardsChecker cardsChecker = new WikipediaCardsChecker();
         for(TestData data : testData)
             System.out.println(
                     (data.result == cardsChecker.check(data.preOutCards, data.ownedCards, data.outCards)) + " : "
+                            + data.preOutCards + ","
                             + data.ownedCards + ","
-                            + data.ownedCards + ","
-                            + data.ownedCards + ","
+                            + data.outCards + ","
                             + data.result + " : "
                             + cardsChecker.check(data.preOutCards, data.ownedCards, data.outCards));
     }
