@@ -87,7 +87,9 @@ public class WikipediaCardsChecker implements CardsChecker {
                         return CardsType.飞机不带翼;
                     }
                     if(formatCards.size() % 2 == 0){
-                        if(formatCards.getCounts()[formatCards.size() / 2 - 1] == 3){
+                        if(formatCards.getCounts()[formatCards.size() / 2 - 1] == 3
+                                && FormatCards.getIndexByCard(formatCards.getCards()[formatCards.size() / 2 - 1]) <= FormatCards.getIndexByCard('A')
+                                && formatCards.isContinuous(0, formatCards.size() / 2)){
                             if(formatCards.getCounts()[formatCards.size() / 2] == 1 && formatCards.getCounts()[formatCards.size() - 1] == 1)
                                 return CardsType.飞机带小翼;
                             if(formatCards.getCounts()[formatCards.size() / 2] == 2 && formatCards.getCounts()[formatCards.size() - 1] == 2)
