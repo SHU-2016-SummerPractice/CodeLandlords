@@ -17,6 +17,9 @@ public class WikipediaCardsCheckerTester {
                 "AA",
                 "AAAA",
                 "AAA2",
+                "33445566",
+                "3344556678",
+                "3344"
         };
         WikipediaCardsChecker cardsChecker = new WikipediaCardsChecker();
         for(String str : testData)

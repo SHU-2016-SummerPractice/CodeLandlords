@@ -45,13 +45,15 @@ public class WikipediaCardsChecker implements CardsChecker {
         for(char ch : cards.toCharArray())
             if(FormatCards.getIndexByCard(ch) == -1)
                 return CardsType.错误;
+
         FormatCards formatCards = new FormatCards(cards);
+
         switch (formatCards.getCounts()[0]){
             case 1:
                 if(cards.length() == 1)
                     return CardsType.单张;
                 if(cards.length() >= 5
-                        && formatCards.getCards()[formatCards.size() - 1] <= 'A'
+                        && FormatCards.getIndexByCard(formatCards.getCards()[formatCards.size() - 1]) <= FormatCards.getIndexByCard('A')
                         && formatCards.isContinuous(0, formatCards.size()))
                     return CardsType.单顺;
                 if(cards.length() == 2
@@ -62,10 +64,11 @@ public class WikipediaCardsChecker implements CardsChecker {
             case 2:
                 if(cards.length() == 2)
                     return CardsType.一对;
-                if(cards.length() == 3)
-                    return CardsType.错误;
-                if(cards.length() > 3
-                        && judgeStraightPair(formatCards, 0))
+                if(formatCards.size() >= 3
+                        && formatCards.getCounts()[0] == 2
+                        && formatCards.getCounts()[formatCards.size() - 1] == 2
+                        && FormatCards.getIndexByCard(formatCards.getCards()[formatCards.size() - 1]) <= FormatCards.getIndexByCard('A')
+                        && formatCards.isContinuous(0, formatCards.size()))
                     return CardsType.双顺;
                 return CardsType.错误;
             case 3:
@@ -142,27 +145,6 @@ public class WikipediaCardsChecker implements CardsChecker {
                 sb.append(FormatCards.getCardByIndex(i));
         }
         return sb.toString();
-    }
-
-    /**
-     * 判断是不是连续的顺子对，传入0是从头开始判断，判断规则：最小为3，最大为A
-     * @param formatCards 牌对象
-     * @param index 当前是第几类排，如223355中，2是0，3是1，5是2
-     * @return
-     */
-    private Boolean judgeStraightPair(FormatCards formatCards, int index){
-        if(index == formatCards.size()){
-            return true;
-        }
-        if(formatCards.getCounts()[index] == 2){
-            if(index + 1 < formatCards.size()
-                    && (FormatCards.getIndexByCard(formatCards.getCards()[index]) != FormatCards.getIndexByCard(formatCards.getCards()[index+1]) - 1
-                    || formatCards.getCards()[index+1] == 'A') ){
-                return false;
-            }
-            return judgeStraightPair(formatCards, index+1);
-        }
-        return false;
     }
 
     /**
