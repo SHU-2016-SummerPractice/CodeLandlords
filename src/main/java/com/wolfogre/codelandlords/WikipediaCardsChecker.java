@@ -16,7 +16,7 @@ public class WikipediaCardsChecker implements CardsChecker {
     /**
      * 牌型
      */
-    private enum CardsType {
+    public enum CardsType {
         错误,
         单张,
         一对,
@@ -50,19 +50,19 @@ public class WikipediaCardsChecker implements CardsChecker {
 
         switch (formatCards.getCounts()[0]){
             case 1:
-                if(cards.length() == 1)
+                if(formatCards.size() == 1)
                     return CardsType.单张;
-                if(cards.length() >= 5
+                if(formatCards.size() >= 5
                         && FormatCards.getIndexByCard(formatCards.getCards()[formatCards.size() - 1]) <= FormatCards.getIndexByCard('A')
                         && formatCards.isContinuous(0, formatCards.size()))
                     return CardsType.单顺;
-                if(cards.length() == 2
+                if(formatCards.size() == 2
                         && formatCards.getCards()[0] == 'M'
                         && formatCards.getCards()[1] == 'S')
                     return CardsType.火箭;
                 return CardsType.错误;
             case 2:
-                if(cards.length() == 2)
+                if(formatCards.size() == 1)
                     return CardsType.一对;
                 if(formatCards.size() >= 3
                         && formatCards.getCounts()[0] == 2
@@ -72,14 +72,13 @@ public class WikipediaCardsChecker implements CardsChecker {
                     return CardsType.双顺;
                 return CardsType.错误;
             case 3:
-                if(cards.length() == 3)
+                if(formatCards.size() == 1)
                     return CardsType.三不带;
-                if(cards.length() == 4)
-                    return CardsType.三带一;
-                if(cards.length() == 5 && formatCards.size() == 2)
-                    return CardsType.三带二;
-                if(cards.length() == 5 && formatCards.size() == 3){
-                    return CardsType.错误;
+                if(formatCards.size() == 2){
+                    if(formatCards.getCounts()[1] == 1)
+                        return CardsType.三带一;
+                    if(formatCards.getCounts()[1] == 2)
+                        return CardsType.三带二;
                 }
                 if(cards.length() > 5
                         && judgeStraight(formatCards, 0, 3)){
@@ -89,6 +88,7 @@ public class WikipediaCardsChecker implements CardsChecker {
                         && judgePlaneWithWing(formatCards, 0, 3, getPlaneSize(formatCards, 3))){
                     return CardsType.飞机带翼;
                 }
+                return CardsType.错误;
             case 4:
                 if(formatCards.size() == 1){
                     return CardsType.炸弹;
