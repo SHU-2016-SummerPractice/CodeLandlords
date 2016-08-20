@@ -47,4 +47,37 @@ public class WikipediaCardsCheckerTester {
                     + cardsChecker.getCardsType(entry.getKey()) + " : "
                     + entry.getValue());
     }
+
+    @Test
+    public void testCheck() {
+        class TestData{
+            public TestData(String preOutCards, String ownedCards, String outCards, boolean result) {
+                this.preOutCards = preOutCards;
+                this.ownedCards = ownedCards;
+                this.outCards = outCards;
+                this.result = result;
+            }
+
+            String preOutCards;
+            String ownedCards;
+            String outCards;
+            boolean result;
+        }
+
+        List<TestData> testData = new ArrayList<>();
+
+        testData.add(new TestData("A", "A2", "2", true));
+        testData.add(new TestData("A", "A", "2", false));
+        testData.add(new TestData("A", "A2", "A", false));
+
+        WikipediaCardsChecker cardsChecker = new WikipediaCardsChecker();
+        for(TestData data : testData)
+            System.out.println(
+                    (data.result == cardsChecker.check(data.preOutCards, data.ownedCards, data.outCards)) + " : "
+                            + data.ownedCards + ","
+                            + data.ownedCards + ","
+                            + data.ownedCards + ","
+                            + data.result + " : "
+                            + cardsChecker.check(data.preOutCards, data.ownedCards, data.outCards));
+    }
 }

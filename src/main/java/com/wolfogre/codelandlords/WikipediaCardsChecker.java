@@ -8,9 +8,8 @@ import org.junit.Test;
 public class WikipediaCardsChecker implements CardsChecker {
     @Override
     public boolean check(String preOutCards, String ownedCards, String outCards) {
-        if(!contains(ownedCards, outCards))
-            return false;
-        return false;
+        return contains(ownedCards, outCards)
+                && isBigger(preOutCards, outCards);
     }
 
     /**
@@ -112,6 +111,33 @@ public class WikipediaCardsChecker implements CardsChecker {
                 return CardsType.错误;
             default:
                 return null;
+        }
+    }
+
+    /**
+     * 判读自己出的牌是否比上家大
+     * @param preOutCards 上家出的牌
+     * @param outCards 自己出的牌
+     * @return 是否比上家大
+     */
+    private boolean isBigger(String preOutCards, String outCards){
+        CardsType preOutCardsType = getCardsType(preOutCards);
+        CardsType outCardsType = getCardsType(outCards);
+        FormatCards preFormatCards = new FormatCards(preOutCards);
+        FormatCards formatCards = new FormatCards(outCards);
+
+        switch (preOutCardsType) {
+            case 错误:
+                throw new RuntimeException("PreOutCards is illegal");
+            case 炸弹:
+                return outCardsType.equals(CardsType.火箭)
+                        || outCardsType.equals(CardsType.炸弹) && FormatCards.getIndexByCard(preFormatCards.getCards()[0]) < FormatCards.getIndexByCard(formatCards.getCards()[0]);
+            case 火箭:
+                return false;
+            default:
+                return outCardsType.equals(preOutCardsType)
+                        && preFormatCards.size() == formatCards.size()
+                        && FormatCards.getIndexByCard(preFormatCards.getCards()[0]) < FormatCards.getIndexByCard(formatCards.getCards()[0]);
         }
     }
 
