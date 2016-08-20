@@ -9,7 +9,7 @@ package com.wolfogre.codelandlords;
  */
 public interface Gambler {
     /**
-     * 角色
+     * 相对角色
      * PRE_PRE 上上家
      * PRE 上家
      * SELF 自己

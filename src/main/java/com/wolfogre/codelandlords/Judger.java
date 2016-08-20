@@ -8,7 +8,8 @@ import java.util.Random;
 import static com.wolfogre.codelandlords.Gambler.Role.*;
 
 /**
- * Created by wolfogre on 8/9/16.
+ * 裁判
+ * 负责比赛过程的组织
  */
 public class Judger {
 
@@ -16,6 +17,15 @@ public class Judger {
     private CardsChecker cardsChecker;
     private Random random;
 
+    /**
+     * 构造方法
+     * 默认座次是 1->2->3->1
+     * 若要调整座次，需重新构造
+     * @param gambler1 玩家1
+     * @param gambler2 玩家2
+     * @param gambler3 玩家3
+     * @param cardsChecker 出牌检查器
+     */
     public Judger(Gambler gambler1, Gambler gambler2, Gambler gambler3, CardsChecker cardsChecker){
         random = new Random();
         gambler = new Gambler[3];
@@ -25,6 +35,11 @@ public class Judger {
         this.cardsChecker = cardsChecker;
     }
 
+    /**
+     * 进行一场比赛
+     * 可被反复调用完成多常比赛，但座次不变
+     * @return 单场得分，依次是玩家1、2、3的得分，
+     */
     public int[] judge() {
         ArrayList<String> outCardsQueue = new ArrayList<>();
         int landlord = getRandomLandlord();
@@ -73,14 +88,30 @@ public class Judger {
         return result;
     }
 
+    /**
+     * 发牌
+     * @param landlord 地主的下标
+     * @return 三家的牌
+     */
     private String[] getRandomCards(int landlord){
+        // TODO
         return null;
     }
 
+    /**
+     * 随机生成地主
+     * @return 地主的下标
+     */
     private int getRandomLandlord(){
         return random.nextInt(3);
     }
 
+    /**
+     * 根据下标获得彼此的相对角色
+     * @param self 自己的下标
+     * @param other 对方的下标
+     * @return 相对角色
+     */
     private Role getRoleByIndex(int self, int other){
         switch ((other + 3 - self) % 3){
             case 0:
@@ -93,6 +124,12 @@ public class Judger {
         return null;
     }
 
+    /**
+     * 根据自己的下标和相对角色获得对方的下标
+     * @param self 自己的下标
+     * @param other 相对角色
+     * @return 对方的下标
+     */
     private int getIndexByRole(int self, Role other){
         switch (other){
             case PRE_PRE:
@@ -106,7 +143,14 @@ public class Judger {
         }
     }
 
+    /**
+     * 计算出牌后剩下的牌
+     * @param ownedCards 拥有的牌
+     * @param outCards 出掉的牌
+     * @return 剩下的牌
+     */
     private String subtractCards(String ownedCards, String outCards){
+        //TODO
         return null;
     }
 }

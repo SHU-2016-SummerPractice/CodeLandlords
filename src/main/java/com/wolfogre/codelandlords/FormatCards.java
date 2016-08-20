@@ -4,11 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by wolfogre on 8/12/16.
+ * 将牌规整化的工具
+ * 方便牌型判断和输出
  */
 public class FormatCards{
+
     private char [] cards;
     private int [] counts;
+
+    /**
+     * 构造方法
+     * 它将对乱序的牌进行一次排序
+     * 排序依据是，出现次数多的牌在前，若出现次数一样，小的牌在前
+     * @param origin 乱序的牌
+     */
     public FormatCards(String origin){
         HashMap<Character, Integer> record = new HashMap<Character, Integer>();
         for(char ch : origin.toCharArray()){
@@ -37,18 +46,42 @@ public class FormatCards{
         }
     }
 
+    /**
+     * 获得规整化后的牌
+     * 如 "3444555A"，则
+     * getCards() = ['4','5','3','A']
+     * @return 规整化后的牌
+     */
     public char[] getCards() {
         return cards.clone();
     }
 
+    /**
+     * 获得规整化后的牌出现的次数
+     * 如 "3444555A"，则
+     * getCounts() = [3,3,1,1]
+     * @return 规整化后的牌出现的次数
+     */
     public int[] getCounts() {
         return counts.clone();
     }
 
+    /**
+     * 获得出现的牌的种数
+     * 如 "3444555A"，则
+     * size() = 4
+     * @return 出现的牌的种数
+     */
     public int size(){
-        return counts.length;
+        return cards.length;
     }
 
+    /**
+     * 判断规整化后的牌，从 getCards()[start] 到 getCards()[end] 是不是连续的
+     * @param start 起始下标，含
+     * @param end 结束下标，不含
+     * @return 是否连续
+     */
     public boolean isContinuous(int start, int end){
         for(int i = start; i < end - 1; ++i){
             if(getIndexByCard(cards[i]) != getIndexByCard(cards[i + 1]) - 1)
@@ -57,7 +90,14 @@ public class FormatCards{
         return true;
     }
 
-    public String toCards(){
+    /**
+     * 获得规整化后的牌的输出形式
+     * 如 "3444555A"，则
+     * toString() = "4445553A"
+     * @return 规整化后的牌的输出形式
+     */
+    @Override
+    public String toString(){
         int [] tempCounts = counts.clone();
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < tempCounts.length; ++i){
@@ -67,7 +107,12 @@ public class FormatCards{
         return sb.toString();
     }
 
-    static int getIndexByCard(char ch){
+    /**
+     * 获得一张牌的序号，牌越大序号越大
+     * @param ch 单张牌
+     * @return 序号，出错返回 -1
+     */
+    public static int getIndexByCard(char ch){
         switch (ch){
             case '3':
                 return 0;
@@ -104,7 +149,12 @@ public class FormatCards{
         }
     }
 
-    static public char getCardByIndex(int index){
+    /**
+     * 获得某个序号对应的牌
+     * @param index 序号
+     * @return 单张牌，出错返回 '\0'
+     */
+    public static char getCardByIndex(int index){
         switch (index){
             case 0:
                 return '3';
@@ -136,9 +186,8 @@ public class FormatCards{
                 return 'M';
             case 14:
                 return 'S';
-
             default:
-                return 0;
+                return '\0';
         }
     }
 }

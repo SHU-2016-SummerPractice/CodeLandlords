@@ -2,6 +2,9 @@ package com.wolfogre.codelandlords;
 
 import org.junit.Test;
 
+/**
+ * 根据维基百科-斗地主的规则（有调整）实现的出牌检查器
+ */
 public class WikipediaCardsChecker implements CardsChecker {
     @Override
     public boolean check(String preOutCards, String ownedCards, String outCards) {
@@ -10,6 +13,9 @@ public class WikipediaCardsChecker implements CardsChecker {
         return false;
     }
 
+    /**
+     * 牌型
+     */
     private enum CardsType {
         错误,
         单张,
@@ -28,8 +34,12 @@ public class WikipediaCardsChecker implements CardsChecker {
         火箭,
     }
 
+    /**
+     * 获得牌型
+     * @param cards 给定的牌
+     * @return 牌型
+     */
     public CardsType getCardsType(String cards){
-        //TODO:判断牌型的逻辑
         if(cards.isEmpty())
             return CardsType.错误;
         for(char ch : cards.toCharArray())
@@ -102,6 +112,12 @@ public class WikipediaCardsChecker implements CardsChecker {
         }
     }
 
+    /**
+     * 判读拥有的牌是否包含出的牌
+     * @param ownedCards 拥有的牌
+     * @param outCards 出的牌
+     * @return 是否包含
+     */
     private boolean contains(String ownedCards, String outCards){
         int[] record = new int[15];
         for(char ch : ownedCards.toCharArray()){
