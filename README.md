@@ -1,7 +1,7 @@
 # CodeLandlords
 代码斗地主，是一个斗地主游戏的对战平台，但是参与游戏的并不是人，而是玩家所编写的 Java 类。
 
-[游戏规则说](https://github.com/SHU-2016-SummerPractice/CodeLandlords/blob/master/GameRules.md)
+[游戏规则说明](https://github.com/SHU-2016-SummerPractice/CodeLandlords/blob/master/GameRules.md)
 
 ## 场景描述
 

@@ -1,4 +1,4 @@
-package com.wolfogre.test;
+package com.wolfogre.codelandlords;
 
 import org.junit.Test;
 
