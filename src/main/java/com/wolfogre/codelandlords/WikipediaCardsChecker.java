@@ -79,6 +79,8 @@ public class WikipediaCardsChecker implements CardsChecker {
                     if(formatCards.getCounts()[1] == 2)
                         return CardsType.三带二;
                 }
+
+                //TODO:大 Bug，虽然不再讨论带四张相同单只的情况，却忽略了带两张或三张相同单只的情况 T_T
                 if(formatCards.size() >= 2){
                     if(formatCards.getCounts()[formatCards.size() - 1] == 3
                             && formatCards.isContinuous(0, formatCards.size())
