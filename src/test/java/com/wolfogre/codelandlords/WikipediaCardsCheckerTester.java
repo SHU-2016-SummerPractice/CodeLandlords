@@ -32,6 +32,8 @@ public class WikipediaCardsCheckerTester {
         testData.add(new AbstractMap.SimpleEntry<>("333444555666789M", WikipediaCardsChecker.CardsType.飞机带小翼));
         testData.add(new AbstractMap.SimpleEntry<>("333444555666778800QQ", WikipediaCardsChecker.CardsType.飞机带大翼));
         testData.add(new AbstractMap.SimpleEntry<>("333444555666780Q", WikipediaCardsChecker.CardsType.飞机带小翼));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666788Q", WikipediaCardsChecker.CardsType.飞机带小翼));
+        testData.add(new AbstractMap.SimpleEntry<>("3334445556667888", WikipediaCardsChecker.CardsType.飞机带小翼));
         testData.add(new AbstractMap.SimpleEntry<>("AAA22234", WikipediaCardsChecker.CardsType.错误));
         testData.add(new AbstractMap.SimpleEntry<>("333444555777680Q", WikipediaCardsChecker.CardsType.错误));
         testData.add(new AbstractMap.SimpleEntry<>("333444555666778800", WikipediaCardsChecker.CardsType.错误));
@@ -71,7 +73,12 @@ public class WikipediaCardsCheckerTester {
         testData.add(new TestData("A", "A2", "A", false));
         testData.add(new TestData("SM", "2222", "2222", false));
         testData.add(new TestData("2222", "AAAASM", "SM", true));
-
+        testData.add(new TestData("333444555778", "888999000JQK", "888999000JQK", true));
+        testData.add(new TestData("333444555777", "888999000JQK", "888999000JQK", true));
+        testData.add(new TestData("333444555666", "888999000JQK", "888999000JQK", false));
+        testData.add(new TestData("3334445556667778", "888999000JJJQQQ", "888999000JJJQQQ", false));
+        testData.add(new TestData("333444555666777", "888999000JJJQQQKKKK", "888999000JJJQQQKKKK", false));
+        testData.add(new TestData("444555666888", "333999000JJJ", "333999000JJJ", true));
         WikipediaCardsChecker cardsChecker = new WikipediaCardsChecker();
         for(TestData data : testData)
             System.out.println(
