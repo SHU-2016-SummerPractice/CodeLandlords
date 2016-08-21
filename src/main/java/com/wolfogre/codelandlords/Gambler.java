@@ -31,7 +31,7 @@ public abstract class Gambler {
      * PRE 上家
      * SELF 自己
      */
-    enum Role{PRE_PRE, PRE, SELF}
+    public enum Role{PRE_PRE, PRE, SELF}
 
     /**
      * 叫啥名字，建议格式：“名字_x.x”，不要有空格，如“Coach_1.0”

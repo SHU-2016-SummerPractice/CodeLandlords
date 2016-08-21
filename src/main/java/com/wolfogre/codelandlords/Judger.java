@@ -93,11 +93,12 @@ public class Judger {
         if(winner == landlord){
             int[] result = {-bet, -bet, -bet};
             result[winner] = 2 * bet;
+            logOutput.println("[innings result] " + Arrays.toString(result));
             return result;
         }
         int[] result = {bet, bet, bet};
         result[winner] = -2 * bet;
-        logOutput.println("[winner] " + Arrays.toString(result));
+        logOutput.println("[innings result] " + Arrays.toString(result));
         return result;
     }
 
