@@ -7,7 +7,24 @@ package com.wolfogre.codelandlords;
 /**
  * 赌徒
  */
-public interface Gambler {
+public abstract class Gambler {
+    /**
+     * 出牌检查器
+     */
+    private CardsChecker cardsChecker = new CardsChecker();
+
+    protected boolean check(String preOutCards, String ownedCards, String outCards){
+        return cardsChecker.check(preOutCards, ownedCards, outCards);
+    }
+
+    protected CardsType getCardsType(String cards){
+        return cardsChecker.getCardsType(cards);
+    }
+
+    protected boolean isBigger(String preOutCards, String outCards){
+        return cardsChecker.isBigger(preOutCards, outCards);
+    }
+
     /**
      * 相对角色
      * PRE_PRE 上上家

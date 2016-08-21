@@ -7,7 +7,7 @@ import java.util.Map;
  * 将牌规整化的工具
  * 方便牌型判断和输出
  */
-public class FormatCards{
+class FormatCards{
 
     private char [] cards;
     private int [] counts;
@@ -18,7 +18,7 @@ public class FormatCards{
      * 排序依据是，出现次数多的牌在前，若出现次数一样，小的牌在前
      * @param origin 乱序的牌
      */
-    public FormatCards(String origin){
+    FormatCards(String origin){
         HashMap<Character, Integer> record = new HashMap<Character, Integer>();
         for(char ch : origin.toCharArray()){
             record.put(ch, record.getOrDefault(ch, 0) + 1);
@@ -52,7 +52,7 @@ public class FormatCards{
      * getCards() = ['4','5','3','A']
      * @return 规整化后的牌
      */
-    public char[] getCards() {
+    char[] getCards() {
         return cards.clone();
     }
 
@@ -62,7 +62,7 @@ public class FormatCards{
      * getCounts() = [3,3,1,1]
      * @return 规整化后的牌出现的次数
      */
-    public int[] getCounts() {
+    int[] getCounts() {
         return counts.clone();
     }
 
@@ -72,7 +72,7 @@ public class FormatCards{
      * size() = 4
      * @return 出现的牌的种数
      */
-    public int size(){
+    int size(){
         return cards.length;
     }
 
@@ -82,7 +82,7 @@ public class FormatCards{
      * @param end 结束下标，不含
      * @return 是否连续
      */
-    public boolean isContinuous(int start, int end){
+    boolean isContinuous(int start, int end){
         for(int i = start; i < end - 1; ++i){
             if(getIndexByCard(cards[i]) != getIndexByCard(cards[i + 1]) - 1)
                 return false;
@@ -112,7 +112,7 @@ public class FormatCards{
      * @param ch 单张牌
      * @return 序号，出错返回 -1
      */
-    public static int getIndexByCard(char ch){
+    static int getIndexByCard(char ch){
         switch (ch){
             case '3':
                 return 0;

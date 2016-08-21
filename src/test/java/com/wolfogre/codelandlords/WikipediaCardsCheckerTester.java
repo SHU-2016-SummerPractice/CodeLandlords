@@ -13,36 +13,36 @@ import java.util.Map;
 public class WikipediaCardsCheckerTester {
     @Test
     public void testGetCardsType() {
-        List<Map.Entry<String, WikipediaCardsChecker.CardsType>> testData = new ArrayList<>();
-        testData.add(new AbstractMap.SimpleEntry<>("A", WikipediaCardsChecker.CardsType.单张));
-        testData.add(new AbstractMap.SimpleEntry<>("AA", WikipediaCardsChecker.CardsType.一对));
-        testData.add(new AbstractMap.SimpleEntry<>("AAAA", WikipediaCardsChecker.CardsType.炸弹));
-        testData.add(new AbstractMap.SimpleEntry<>("SM", WikipediaCardsChecker.CardsType.火箭));
-        testData.add(new AbstractMap.SimpleEntry<>("33445566", WikipediaCardsChecker.CardsType.双顺));
-        testData.add(new AbstractMap.SimpleEntry<>("33447788", WikipediaCardsChecker.CardsType.错误));
-        testData.add(new AbstractMap.SimpleEntry<>("3344556678", WikipediaCardsChecker.CardsType.错误));
-        testData.add(new AbstractMap.SimpleEntry<>("3344", WikipediaCardsChecker.CardsType.错误));
-        testData.add(new AbstractMap.SimpleEntry<>("KKK", WikipediaCardsChecker.CardsType.三不带));
-        testData.add(new AbstractMap.SimpleEntry<>("KKKA", WikipediaCardsChecker.CardsType.三带一));
-        testData.add(new AbstractMap.SimpleEntry<>("3KKKA", WikipediaCardsChecker.CardsType.错误));
-        testData.add(new AbstractMap.SimpleEntry<>("33KKK", WikipediaCardsChecker.CardsType.三带二));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555666", WikipediaCardsChecker.CardsType.飞机不带翼));
-        testData.add(new AbstractMap.SimpleEntry<>("33344457", WikipediaCardsChecker.CardsType.飞机带小翼));
-        testData.add(new AbstractMap.SimpleEntry<>("3334445577", WikipediaCardsChecker.CardsType.飞机带大翼));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555666789M", WikipediaCardsChecker.CardsType.飞机带小翼));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555666778800QQ", WikipediaCardsChecker.CardsType.飞机带大翼));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555666780Q", WikipediaCardsChecker.CardsType.飞机带小翼));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555666788Q", WikipediaCardsChecker.CardsType.飞机带小翼));
-        testData.add(new AbstractMap.SimpleEntry<>("3334445556667888", WikipediaCardsChecker.CardsType.飞机带小翼));
-        testData.add(new AbstractMap.SimpleEntry<>("AAA22234", WikipediaCardsChecker.CardsType.错误));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555777680Q", WikipediaCardsChecker.CardsType.错误));
-        testData.add(new AbstractMap.SimpleEntry<>("333444555666778800", WikipediaCardsChecker.CardsType.错误));
-        testData.add(new AbstractMap.SimpleEntry<>("33334455", WikipediaCardsChecker.CardsType.四带二对));
-        testData.add(new AbstractMap.SimpleEntry<>("333345", WikipediaCardsChecker.CardsType.四带二张));
-        testData.add(new AbstractMap.SimpleEntry<>("3333455", WikipediaCardsChecker.CardsType.错误));
+        List<Map.Entry<String, CardsChecker.CardsType>> testData = new ArrayList<>();
+        testData.add(new AbstractMap.SimpleEntry<>("A", CardsChecker.CardsType.单张));
+        testData.add(new AbstractMap.SimpleEntry<>("AA", CardsChecker.CardsType.一对));
+        testData.add(new AbstractMap.SimpleEntry<>("AAAA", CardsChecker.CardsType.炸弹));
+        testData.add(new AbstractMap.SimpleEntry<>("SM", CardsChecker.CardsType.火箭));
+        testData.add(new AbstractMap.SimpleEntry<>("33445566", CardsChecker.CardsType.双顺));
+        testData.add(new AbstractMap.SimpleEntry<>("33447788", CardsChecker.CardsType.错误));
+        testData.add(new AbstractMap.SimpleEntry<>("3344556678", CardsChecker.CardsType.错误));
+        testData.add(new AbstractMap.SimpleEntry<>("3344", CardsChecker.CardsType.错误));
+        testData.add(new AbstractMap.SimpleEntry<>("KKK", CardsChecker.CardsType.三不带));
+        testData.add(new AbstractMap.SimpleEntry<>("KKKA", CardsChecker.CardsType.三带一));
+        testData.add(new AbstractMap.SimpleEntry<>("3KKKA", CardsChecker.CardsType.错误));
+        testData.add(new AbstractMap.SimpleEntry<>("33KKK", CardsChecker.CardsType.三带二));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666", CardsChecker.CardsType.飞机不带翼));
+        testData.add(new AbstractMap.SimpleEntry<>("33344457", CardsChecker.CardsType.飞机带小翼));
+        testData.add(new AbstractMap.SimpleEntry<>("3334445577", CardsChecker.CardsType.飞机带大翼));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666789M", CardsChecker.CardsType.飞机带小翼));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666778800QQ", CardsChecker.CardsType.飞机带大翼));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666780Q", CardsChecker.CardsType.飞机带小翼));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666788Q", CardsChecker.CardsType.飞机带小翼));
+        testData.add(new AbstractMap.SimpleEntry<>("3334445556667888", CardsChecker.CardsType.飞机带小翼));
+        testData.add(new AbstractMap.SimpleEntry<>("AAA22234", CardsChecker.CardsType.错误));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555777680Q", CardsChecker.CardsType.错误));
+        testData.add(new AbstractMap.SimpleEntry<>("333444555666778800", CardsChecker.CardsType.错误));
+        testData.add(new AbstractMap.SimpleEntry<>("33334455", CardsChecker.CardsType.四带二对));
+        testData.add(new AbstractMap.SimpleEntry<>("333345", CardsChecker.CardsType.四带二张));
+        testData.add(new AbstractMap.SimpleEntry<>("3333455", CardsChecker.CardsType.错误));
 
-        WikipediaCardsChecker cardsChecker = new WikipediaCardsChecker();
-        for(Map.Entry<String, WikipediaCardsChecker.CardsType> entry : testData)
+        CardsChecker cardsChecker = new CardsChecker();
+        for(Map.Entry<String, CardsChecker.CardsType> entry : testData)
             System.out.println(
                     entry.getValue().equals(cardsChecker.getCardsType(entry.getKey())) + " : "
                     + entry.getKey() + " : "
@@ -79,7 +79,7 @@ public class WikipediaCardsCheckerTester {
         testData.add(new TestData("3334445556667778", "888999000JJJQQQ", "888999000JJJQQQ", false));
         testData.add(new TestData("333444555666777", "888999000JJJQQQKKKK", "888999000JJJQQQKKKK", false));
         testData.add(new TestData("444555666888", "333999000JJJ", "333999000JJJ", true));
-        WikipediaCardsChecker cardsChecker = new WikipediaCardsChecker();
+        CardsChecker cardsChecker = new CardsChecker();
         for(TestData data : testData)
             System.out.println(
                     (data.result == cardsChecker.check(data.preOutCards, data.ownedCards, data.outCards)) + " : "

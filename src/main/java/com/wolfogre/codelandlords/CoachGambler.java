@@ -4,12 +4,9 @@ package com.wolfogre.codelandlords;
  * 陪练
  * 玩家要做的也是写一个这样的类，实现 Gambler 接口，
  * 为了让玩家在测试阶段有陪练，
- * CoachGambler 作为一个炮灰上场，
+ * CoachGambler 作为一个炮灰上场
  */
-public class CoachGambler implements Gambler {
-
-
-    WikipediaCardsChecker wikipediaCardsChecker;
+public class CoachGambler extends Gambler {
 
     @Override
     public String getName() {
@@ -20,12 +17,11 @@ public class CoachGambler implements Gambler {
     @Override
     public void start(Role landlord, String landlordExtraCards, String ownedCards) {
 
-        wikipediaCardsChecker = new WikipediaCardsChecker();
     }
 
     @Override
     public void over(Role winner, String prePreRemainCards, String preRemainCards, String remainCards) {
-        return;
+
     }
 
     @Override
@@ -37,14 +33,13 @@ public class CoachGambler implements Gambler {
         if(search(0))
             return searchResult.toString();
         return "";
-        //TODO:明天继续从这儿写，如果像金宇说的，能给的接口给全了，那有些类还得重构
     }
 
     String preCards;
     String ownedCards;
     StringBuilder searchResult;
     boolean search(int index){
-        if(wikipediaCardsChecker.check(preCards, ownedCards, searchResult.toString()))
+        if(check(preCards, ownedCards, searchResult.toString()))
             return true;
         if(index == ownedCards.length())
             return false;
