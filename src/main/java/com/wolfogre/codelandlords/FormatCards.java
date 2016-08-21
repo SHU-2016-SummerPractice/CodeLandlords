@@ -154,7 +154,7 @@ class FormatCards{
      * @param index 序号
      * @return 单张牌，出错返回 '\0'
      */
-    public static char getCardByIndex(int index){
+    static char getCardByIndex(int index){
         switch (index){
             case 0:
                 return '3';
@@ -189,5 +189,22 @@ class FormatCards{
             default:
                 return '\0';
         }
+    }
+
+    /**
+     * 给牌进行排序
+     * @param cards 未排序的牌
+     * @return 排序后的牌
+     */
+    static String sort(String cards){
+        int[] record = new int[15];
+        for(char ch : cards.toCharArray()){
+            ++record[getIndexByCard(ch)];
+        }
+        StringBuilder result = new StringBuilder();
+        for(int i = 0; i < record.length; ++i)
+            for(int j = 0; j < record[i]; ++j)
+                result.append(getCardByIndex(i));
+        return result.toString();
     }
 }

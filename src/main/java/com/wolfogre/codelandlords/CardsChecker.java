@@ -65,7 +65,6 @@ class CardsChecker {
                         return CardsType.三带二;
                 }
 
-                //TODO:大 Bug，虽然不再讨论带四张相同单只的情况，却忽略了带两张或三张相同单只的情况 T_T
                 if(formatCards.size() >= 2){
                     if(formatCards.getCounts()[formatCards.size() - 1] == 3
                             && formatCards.isContinuous(0, formatCards.size())
@@ -135,7 +134,7 @@ class CardsChecker {
     }
 
     /**
-     * 判读拥有的牌是否包含出的牌
+     * 判定拥有的牌是否包含出的牌
      * @param ownedCards 拥有的牌
      * @param outCards 出的牌
      * @return 是否包含

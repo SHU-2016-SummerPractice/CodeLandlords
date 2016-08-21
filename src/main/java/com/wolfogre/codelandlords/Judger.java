@@ -59,7 +59,9 @@ public class Judger {
                 result[turn] = -10;
                 return result;
             }
-            //TODO:赌注加倍
+            if(cardsChecker.getCardsType(outCards) == CardsType.炸弹
+                    || cardsChecker.getCardsType(outCards) == CardsType.火箭)
+                bet *= 2;
             cards[turn] = subtractCards(cards[turn], outCards);
             outCardsQueue.add(outCards);
             turn = (turn + 1) % 3;
@@ -91,11 +93,25 @@ public class Judger {
     /**
      * 发牌
      * @param landlord 地主的下标
-     * @return 三家的牌
+     * @return [玩家1的牌，玩家2的牌，玩家3的牌，地主额外的牌（仅供展示，不需要再给玩家）]
      */
     private String[] getRandomCards(int landlord){
-        // TODO
-        return null;
+        StringBuilder stringBuilder =
+                new StringBuilder("33334444555566667777888899990000JJJJQQQQKKKKAAAA2222MS");
+        StringBuilder[] result = new StringBuilder[3];
+        for(int i = 0; i < 3; ++i)
+            result[i] = new StringBuilder();
+        for(int i = 0; i < 17; ++i){
+            for(int j = 0; j < 3; ++j){
+                int randomIndex = random.nextInt(stringBuilder.length());
+                result[j].append(stringBuilder.charAt(randomIndex));
+                stringBuilder.deleteCharAt(randomIndex);
+            }
+        }
+        result[landlord].append(stringBuilder.toString());
+        return new String[]{FormatCards.sort(result[0].toString()),
+                FormatCards.sort(result[1].toString()),
+                FormatCards.sort(result[2].toString())};
     }
 
     /**
@@ -150,7 +166,21 @@ public class Judger {
      * @return 剩下的牌
      */
     private String subtractCards(String ownedCards, String outCards){
-        //TODO
-        return null;
+
+        int[] record = new int[15];
+        for(char ch : ownedCards.toCharArray()){
+            ++record[FormatCards.getIndexByCard(ch)];
+        }
+
+        for(char ch : outCards.toCharArray()){
+            --record[FormatCards.getIndexByCard(ch)];
+        }
+
+        StringBuilder result = new StringBuilder();
+        for(int i = 0; i < record.length; ++i)
+            for(int j = 0; j < record[i]; ++j)
+                result.append(FormatCards.getCardByIndex(i));
+
+        return FormatCards.sort(result.toString());
     }
 }
