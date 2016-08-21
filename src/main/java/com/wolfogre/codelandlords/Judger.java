@@ -2,7 +2,9 @@ package com.wolfogre.codelandlords;
 
 import com.wolfogre.codelandlords.Gambler.Role;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import static com.wolfogre.codelandlords.Gambler.Role.*;
@@ -16,6 +18,7 @@ public class Judger {
     private Gambler[] gambler;
     private CardsChecker cardsChecker;
     private Random random;
+    private PrintStream logOutput;
 
     /**
      * 构造方法
@@ -24,15 +27,15 @@ public class Judger {
      * @param gambler1 玩家1
      * @param gambler2 玩家2
      * @param gambler3 玩家3
-     * @param cardsChecker 出牌检查器
      */
-    public Judger(Gambler gambler1, Gambler gambler2, Gambler gambler3, CardsChecker cardsChecker){
+    public Judger(Gambler gambler1, Gambler gambler2, Gambler gambler3, PrintStream logOutput){
         random = new Random();
         gambler = new Gambler[3];
         gambler[0] = gambler1;
         gambler[1] = gambler2;
         gambler[2] = gambler3;
-        this.cardsChecker = cardsChecker;
+        this.cardsChecker = new CardsChecker();
+        this.logOutput = logOutput;
     }
 
     /**
@@ -46,6 +49,10 @@ public class Judger {
         String[] cards = getRandomCards(landlord);
         int turn = landlord;
         int bet = 3;
+
+        for(int i = 0; i < 3; ++i)
+            logOutput.println("[gambler" + (i + 1) + "_start] " + cards[i]);
+
         for(int i = 0; i < 3; ++i){
             gambler[i].start(getRoleByIndex(i, landlord), cards[3], cards[i]);
         }
@@ -54,7 +61,8 @@ public class Judger {
             String prePreOutCards = outCardsQueue.size() >= 2 ? outCardsQueue.get(outCardsQueue.size() - 2) : "";
             String preOutCards = outCardsQueue.size() >= 1 ? outCardsQueue.get(outCardsQueue.size() - 1) : "";
             String outCards = gambler[turn].play(prePreOutCards, preOutCards, cards[turn]);
-            if(!cardsChecker.check(preOutCards, cards[turn], outCards)){
+            if(!cardsChecker.check(prePreOutCards, preOutCards, cards[turn], outCards)){
+                logOutput.println("[gambler" + turn + "_break_rule] " + cards[turn] + "->" + outCards);
                 int[] result = new int[3];
                 result[turn] = -10;
                 return result;
@@ -62,6 +70,7 @@ public class Judger {
             if(cardsChecker.getCardsType(outCards) == CardsType.炸弹
                     || cardsChecker.getCardsType(outCards) == CardsType.火箭)
                 bet *= 2;
+            logOutput.println("[gambler" + turn + "_out] " + cards[turn] + "->" + outCards);
             cards[turn] = subtractCards(cards[turn], outCards);
             outCardsQueue.add(outCards);
             turn = (turn + 1) % 3;
@@ -74,6 +83,7 @@ public class Judger {
                 break;
             }
         }
+        logOutput.println("[winner] " + winner);
         for(int i = 0; i < 3; ++i){
             gambler[i].over(getRoleByIndex(i, winner),
                     cards[getIndexByRole(i, PRE_PRE)],
@@ -87,6 +97,7 @@ public class Judger {
         }
         int[] result = {bet, bet, bet};
         result[winner] = -2 * bet;
+        logOutput.println("[winner] " + Arrays.toString(result));
         return result;
     }
 
@@ -108,10 +119,12 @@ public class Judger {
                 stringBuilder.deleteCharAt(randomIndex);
             }
         }
-        result[landlord].append(stringBuilder.toString());
+        String extraCards = stringBuilder.toString();
+        result[landlord].append(extraCards);
         return new String[]{FormatCards.sort(result[0].toString()),
                 FormatCards.sort(result[1].toString()),
-                FormatCards.sort(result[2].toString())};
+                FormatCards.sort(result[2].toString()),
+                extraCards};
     }
 
     /**

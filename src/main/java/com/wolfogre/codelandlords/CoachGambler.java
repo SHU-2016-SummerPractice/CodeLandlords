@@ -26,8 +26,17 @@ public class CoachGambler extends Gambler {
 
     @Override
     public String play(String prePreCards, String preCards, String ownedCards) {
+        String upCards = preCards;
+        if(upCards.isEmpty())
+            upCards = prePreCards;
+        if(upCards.isEmpty()){
+            int endIndex = ownedCards.length();
+            while(!check(prePreCards, preCards, ownedCards, ownedCards.substring(0, endIndex)))
+                --endIndex;
+            return ownedCards.substring(0, endIndex);
+        }
+        this.upCards = upCards;
         this.ownedCards = ownedCards;
-        this.preCards = preCards;
         this.ownedCards = ownedCards;
         searchResult = new StringBuilder();
         if(search(0))
@@ -35,11 +44,11 @@ public class CoachGambler extends Gambler {
         return "";
     }
 
-    String preCards;
+    String upCards;
     String ownedCards;
     StringBuilder searchResult;
     boolean search(int index){
-        if(check(preCards, ownedCards, searchResult.toString()))
+        if(isBigger(upCards, searchResult.toString()))
             return true;
         if(index == ownedCards.length())
             return false;

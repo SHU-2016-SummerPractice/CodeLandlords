@@ -13,9 +13,20 @@ class CardsChecker {
      * @param outCards 玩家出的牌
      * @return 是否合法
      */
-    boolean check(String preOutCards, String ownedCards, String outCards) {
-        return contains(ownedCards, outCards)
-                && isBigger(preOutCards, outCards);
+    boolean check(String prePreOutCards, String preOutCards, String ownedCards, String outCards) {
+        if(!contains(ownedCards, outCards))
+            return false;
+
+        String upCards = preOutCards;
+        if(upCards.isEmpty())
+            upCards = prePreOutCards;
+        if(upCards.isEmpty())
+            return getCardsType(outCards) != CardsType.不出 && getCardsType(outCards) != CardsType.错误;
+
+        if(getCardsType(outCards) == CardsType.不出)
+            return true;
+
+        return isBigger(upCards, outCards);
     }
 
     /**
@@ -25,7 +36,7 @@ class CardsChecker {
      */
     CardsType getCardsType(String cards){
         if(cards.isEmpty())
-            return CardsType.错误;
+            return CardsType.不出;
         for(char ch : cards.toCharArray())
             if(FormatCards.getIndexByCard(ch) == -1)
                 return CardsType.错误;
@@ -112,9 +123,14 @@ class CardsChecker {
         FormatCards preFormatCards = new FormatCards(preOutCards);
         FormatCards formatCards = new FormatCards(outCards);
 
+        if(outCardsType == CardsType.错误)
+            return false;
+
         switch (preOutCardsType) {
             case 错误:
                 throw new RuntimeException("PreOutCards is illegal");
+            case 不出:
+                return outCardsType != CardsType.不出;
             case 炸弹:
                 return outCardsType.equals(CardsType.火箭)
                         || outCardsType.equals(CardsType.炸弹) && FormatCards.getIndexByCard(preFormatCards.getCards()[0]) < FormatCards.getIndexByCard(formatCards.getCards()[0]);

@@ -83,11 +83,11 @@ public class WikipediaCardsCheckerTester {
         CardsChecker cardsChecker = new CardsChecker();
         for(TestData data : testData)
             System.out.println(
-                    (data.result == cardsChecker.check(data.preOutCards, data.ownedCards, data.outCards)) + " : "
+                    (data.result == cardsChecker.check("", data.preOutCards, data.ownedCards, data.outCards)) + " : "
                             + data.preOutCards + ","
                             + data.ownedCards + ","
                             + data.outCards + ","
                             + data.result + " : "
-                            + cardsChecker.check(data.preOutCards, data.ownedCards, data.outCards));
+                            + cardsChecker.check("", data.preOutCards, data.ownedCards, data.outCards));
     }
 }

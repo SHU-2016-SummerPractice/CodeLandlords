@@ -5,6 +5,7 @@ package com.wolfogre.codelandlords;
  */
 public enum CardsType {
     错误,
+    不出,
     单张,
     一对,
     三不带,

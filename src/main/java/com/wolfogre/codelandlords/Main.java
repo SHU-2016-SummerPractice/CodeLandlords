@@ -31,14 +31,15 @@ public class Main {
             input = scanner.nextLine();
             if(input.isEmpty())
                 input = "com.wolfogre.codelandlords.CoachGambler";
-            if(manager.loadGambler(input, 0))
+            if(manager.loadGambler(input, i))
                 System.out.println("Load " + input + " successfully!");
             else{
                 System.out.println("Load " + input + " unsuccessfully, please try again!");
                 --i;
             }
-
         }
+        manager.start(1,1,System.out);
+
 
     }
 }

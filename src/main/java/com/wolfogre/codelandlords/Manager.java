@@ -1,10 +1,9 @@
 package com.wolfogre.codelandlords;
 
+import org.junit.Test;
+
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * 管理者
@@ -49,11 +48,28 @@ class Manager {
      */
     int[] start(int rounds, int inningsEachRound, PrintStream logOutput){
         int[] result = new int[3];
+
         for(int round = 1; round <= rounds; ++round){
+            int[] order = randomOrder();
+            Gambler[] gamblers = new Gambler[3];
+            for(int i = 0; i < 3; ++i)
+                try {
+                    gamblers[i] = (Gambler)classes[order[i]].newInstance();
+                } catch (InstantiationException | IllegalAccessException e) {
+                    throw new RuntimeException("Fail to instance", e);
+                }
+            Judger judger = new Judger(gamblers[0], gamblers[1], gamblers[2], logOutput);
             for(int inning = 1; inning <= inningsEachRound; ++inning){
                 logOutput.println("round " + round);
                 logOutput.println("inning " + inning);
-                //TODO:接着这儿继续写
+
+                logOutput.println("gambler1 " + gamblers[0].getName() + " " + gamblers[0]);
+                logOutput.println("gambler2 " + gamblers[1].getName() + " " + gamblers[1]);
+                logOutput.println("gambler3 " + gamblers[2].getName() + " " + gamblers[2]);
+                int[] inningResult = judger.judge();
+                for(int i = 0; i < 3; ++i)
+                    result[order[i]] += inningResult[i];
+                logOutput.println("[result] " + Arrays.toString(result));
             }
         }
         return result;

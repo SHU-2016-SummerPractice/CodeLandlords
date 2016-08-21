@@ -13,8 +13,8 @@ public abstract class Gambler {
      */
     private CardsChecker cardsChecker = new CardsChecker();
 
-    protected boolean check(String preOutCards, String ownedCards, String outCards){
-        return cardsChecker.check(preOutCards, ownedCards, outCards);
+    protected boolean check(String prePreOutCards, String preOutCards, String ownedCards, String outCards){
+        return cardsChecker.check(prePreOutCards, preOutCards, ownedCards, outCards);
     }
 
     protected CardsType getCardsType(String cards){
@@ -34,7 +34,7 @@ public abstract class Gambler {
     enum Role{PRE_PRE, PRE, SELF}
 
     /**
-     * 叫啥
+     * 叫啥名字，建议格式：“名字_x.x”，不要有空格，如“Coach_1.0”
      * @return 名字
      */
     public abstract String getName();
