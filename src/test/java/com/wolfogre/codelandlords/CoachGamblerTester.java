@@ -36,6 +36,7 @@ public class CoachGamblerTester {
         testData.add(new TestData("333444555666777", "888999000JJJQQQKKKK", "888999000JJJQQQ"));
         testData.add(new TestData("333444555666777", "88899000JJJQQQKKKK", "KKKK"));
         testData.add(new TestData("444555666888", "333999000JJJ", "333999000JJJ"));
+        testData.add(new TestData("99", "660MS", "MS"));
         CoachGambler coachGambler = new CoachGambler();
         coachGambler.start(null, null, null);
 

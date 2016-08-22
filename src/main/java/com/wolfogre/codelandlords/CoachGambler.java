@@ -53,7 +53,7 @@ public class CoachGambler extends Gambler {
         if(index == ownedCards.length())
             return false;
         searchResult.append(ownedCards.charAt(index));
-        if((index < upCards.length() || index > 4) && search(index + 1))
+        if((searchResult.length() <= upCards.length() || searchResult.length() <= 4) && search(index + 1))
             return true;
         searchResult.deleteCharAt(searchResult.length() - 1);
         return search(index + 1);

@@ -80,6 +80,7 @@ public class WikipediaCardsCheckerTester {
         testData.add(new TestData("333444555666777", "888999000JJJQQQKKKK", "888999000JJJQQQKKKK", false));
         testData.add(new TestData("333444555666777", "888999000JJJQQQKKKK", "KKKK", true));
         testData.add(new TestData("444555666888", "333999000JJJ", "333999000JJJ", true));
+        testData.add(new TestData("99", "MS", "MS", true));
         CardsChecker cardsChecker = new CardsChecker();
         for(TestData data : testData)
             System.out.println(

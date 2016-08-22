@@ -138,11 +138,13 @@ class CardsChecker {
                 return false;
             case 飞机带小翼:
                 return outCardsType == CardsType.炸弹 ||
+                        outCardsType.equals(CardsType.火箭) ||
                         outCardsType.equals(preOutCardsType)
                                 && splitAircraftWithWinglets(formatCards)[0] == splitAircraftWithWinglets(preFormatCards)[0]
                                 && splitAircraftWithWinglets(formatCards)[1] > splitAircraftWithWinglets(preFormatCards)[1];
             default:
                 return outCardsType == CardsType.炸弹 ||
+                        outCardsType.equals(CardsType.火箭) ||
                         outCardsType.equals(preOutCardsType)
                                 && preFormatCards.size() == formatCards.size()
                                 && FormatCards.getIndexByCard(preFormatCards.getCards()[0]) < FormatCards.getIndexByCard(formatCards.getCards()[0]);
