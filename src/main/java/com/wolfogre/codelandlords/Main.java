@@ -38,7 +38,7 @@ public class Main {
                 --i;
             }
         }
-        manager.start(10, 10, System.out);
+        manager.start(5, 2, System.out);
 
 
     }

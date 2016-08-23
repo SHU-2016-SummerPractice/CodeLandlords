@@ -62,7 +62,7 @@ public class Judger {
             String preOutCards = outCardsQueue.size() >= 1 ? outCardsQueue.get(outCardsQueue.size() - 1) : "";
             String outCards = gambler[turn].play(prePreOutCards, preOutCards, cards[turn]);
             if(!cardsChecker.check(prePreOutCards, preOutCards, cards[turn], outCards)){
-                logOutput.println("[gambler" + turn + "_break_rule] " + cards[turn] + "->" + outCards);
+                logOutput.println("[gambler" + (turn + 1) + "_" + gambler[turn].getName() + "_break_rule] " + cards[turn] + "->" + outCards);
                 int[] result = new int[3];
                 result[turn] = -10;
                 return result;
@@ -70,7 +70,7 @@ public class Judger {
             if(cardsChecker.getCardsType(outCards) == CardsType.炸弹
                     || cardsChecker.getCardsType(outCards) == CardsType.火箭)
                 bet *= 2;
-            logOutput.println("[gambler" + turn + "_out] " + cards[turn] + "->" + outCards);
+            logOutput.println("[gambler" + (turn + 1) + "_" + gambler[turn].getName() + "_out] " + cards[turn] + "->" + outCards);
             cards[turn] = subtractCards(cards[turn], outCards);
             outCardsQueue.add(outCards);
             turn = (turn + 1) % 3;
@@ -83,7 +83,7 @@ public class Judger {
                 break;
             }
         }
-        logOutput.println("[winner] " + winner);
+        logOutput.println("[winner] " + (winner + 1) + "_" + gambler[winner].getName());
         for(int i = 0; i < 3; ++i){
             gambler[i].over(getRoleByIndex(i, winner),
                     cards[getIndexByRole(i, PRE_PRE)],
@@ -93,12 +93,20 @@ public class Judger {
         if(winner == landlord){
             int[] result = {-bet, -bet, -bet};
             result[winner] = 2 * bet;
-            logOutput.println("[innings result] " + Arrays.toString(result));
+            logOutput.println("[innings result] ");
+            int index =0;
+            for(int x : result){
+                logOutput.println("gambler " + (index + 1) + " " + gambler[index++].getName() + ":" + x);
+            }
             return result;
         }
         int[] result = {bet, bet, bet};
-        result[winner] = -2 * bet;
-        logOutput.println("[innings result] " + Arrays.toString(result));
+        result[landlord] = -2 * bet;
+        logOutput.println("[innings result] ");
+        int index =0;
+        for(int x : result){
+            logOutput.println("gambler " + (index + 1) + " " + gambler[index++].getName() + ":" + x);
+        }
         return result;
     }
 

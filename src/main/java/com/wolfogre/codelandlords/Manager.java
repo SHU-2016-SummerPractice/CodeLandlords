@@ -41,6 +41,7 @@ class Manager {
 
     /**
      * 开始游戏
+     * TODO:这里注意：我对当前代码的理解是，玩家输入类进行对战以后，gambler就表示了座位，gambler1，2，3对应了各个座位
      * @param rounds 一共多少轮
      * @param inningsEachRound 每轮多少局
      * @param logOutput 日志输出流
@@ -58,6 +59,7 @@ class Manager {
                 } catch (InstantiationException | IllegalAccessException e) {
                     throw new RuntimeException("Fail to instance", e);
                 }
+            System.out.println(gamblers[0].getName() + " " + gamblers[1].getName() + " " + gamblers[2].getName());
             Judger judger = new Judger(gamblers[0], gamblers[1], gamblers[2], logOutput);
             for(int inning = 1; inning <= inningsEachRound; ++inning){
                 logOutput.println("round " + round);
@@ -69,7 +71,11 @@ class Manager {
                 int[] inningResult = judger.judge();
                 for(int i = 0; i < 3; ++i)
                     result[order[i]] += inningResult[i];
-                logOutput.println("[result] " + Arrays.toString(result));
+                logOutput.println("[result] ");
+                int index = 0;
+                for(int x : result){
+                    logOutput.println(classes[index++].getName() + ":" + x);
+                }
             }
         }
         return result;
